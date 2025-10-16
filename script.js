@@ -1,6 +1,4 @@
-// Course data - simplified version of the original data
 const courses = [
-  // Programming & Development
   {
     id: 'py-001',
     title: 'Python for Beginners',
@@ -158,7 +156,6 @@ const courses = [
     price: '₹10,000'
   },
 
-  // Web Development & Design
   {
     id: 'web-001',
     title: 'Full Stack Web Development with MERN',
@@ -277,7 +274,6 @@ const courses = [
     price: '₹8,000'
   },
 
-  // Backend & Databases
   {
     id: 'node-001',
     title: 'Node.js - Backend Development',
@@ -370,7 +366,6 @@ const courses = [
     price: '₹3,500'
   },
 
-  // Mobile Development
   {
     id: 'react-native-001',
     title: 'React Native - Mobile Development',
@@ -450,7 +445,6 @@ const courses = [
     price: '₹9,000'
   },
 
-  // AI & Machine Learning
   {
     id: 'ml-001',
     title: 'Machine Learning - Supervised Learning',
@@ -543,7 +537,6 @@ const courses = [
     price: '₹4,000'
   },
 
-  // Data Science & Analytics
   {
     id: 'ds-001',
     title: 'Data Science Fundamentals',
@@ -636,7 +629,6 @@ const courses = [
     price: '₹7,500'
   },
 
-  // DevOps & Cloud
   {
     id: 'docker-001',
     title: 'Docker - Containerization Mastery',
@@ -729,7 +721,6 @@ const courses = [
     price: '₹5,000'
   },
 
-  // Software Engineering & Architecture
   {
     id: 'se-001',
     title: 'Software Design Patterns',
@@ -796,7 +787,6 @@ const courses = [
     price: '₹22,000'
   },
 
-  // Testing & Quality Assurance
   {
     id: 'qa-001',
     title: 'Unit Testing & Test-Driven Development',
@@ -850,7 +840,6 @@ const courses = [
     price: '₹6,000'
   },
 
-  // Cybersecurity
   {
     id: 'sec-001',
     title: 'Web Security & Ethical Hacking',
@@ -904,7 +893,6 @@ const courses = [
     price: '₹8,500'
   },
 
-  // Other Languages & Technologies
   {
     id: 'java-001',
     title: 'Java - From Basics to Advanced',
@@ -998,32 +986,24 @@ const courses = [
   }
 ];
 
-// State management
 let userKeywords = [];
 let currentPage = 1;
 const resultsPerPage = 10;
 
-// DOM Elements
 const keywordInput = document.getElementById('keywordInput');
 const keywordInputArea = document.getElementById('keywordInputArea');
 const resultsContainer = document.getElementById('resultsContainer');
-const themeToggle = document.getElementById('themeToggle');
-const themeIcon = document.getElementById('themeIcon');
 const mobileActionBtn = document.getElementById('mobileActionBtn');
 const backToTopBtn = document.getElementById('backToTop');
 
-// Initialize the app
 function initApp() {
   setupEventListeners();
   renderEmptyState();
-  // Remove theme initialization
 }
 
-// Set up event listeners
 function setupEventListeners() {
   keywordInput.addEventListener('keydown', handleKeywordInput);
   keywordInputArea.addEventListener('click', () => keywordInput.focus());
-  // Remove theme toggle event listener
   if (mobileActionBtn) {
     mobileActionBtn.addEventListener('click', handleMobileAction);
   }
@@ -1033,7 +1013,6 @@ function setupEventListeners() {
     });
   }
   
-  // Show/hide back to top button based on scroll position
   window.addEventListener('scroll', () => {
     if (backToTopBtn) {
       if (window.pageYOffset > 300) {
@@ -1045,15 +1024,11 @@ function setupEventListeners() {
   });
 }
 
-// Remove theme toggle functions
-
-// Handle keyword input
 function handleKeywordInput(event) {
   if (event.key === 'Enter' && keywordInput.value.trim()) {
     event.preventDefault();
     addKeyword(keywordInput.value.trim());
     keywordInput.value = '';
-    // Always trigger course search after adding a keyword
     rankAndDisplayCourses();
   } else if (event.key === 'Backspace' && !keywordInput.value && userKeywords.length > 0) {
     userKeywords.pop();
@@ -1062,34 +1037,26 @@ function handleKeywordInput(event) {
   }
 }
 
-// Handle mobile action button
 function handleMobileAction() {
   if (keywordInput.value.trim()) {
     addKeyword(keywordInput.value.trim());
     keywordInput.value = '';
   }
-  // Always trigger course search
   rankAndDisplayCourses();
 }
 
-// Add keyword to the list
 function addKeyword(keyword) {
   if (!userKeywords.includes(keyword)) {
     userKeywords.push(keyword);
     renderKeywords();
-    // Reset to first page when new keyword is added
     currentPage = 1;
-    // Always trigger course search after adding a keyword
     rankAndDisplayCourses();
   }
 }
 
-// Render keywords as badges
 function renderKeywords() {
-  // Clear the input area except for the input field
   keywordInputArea.innerHTML = '';
   
-  // Add all keywords as badges
   userKeywords.forEach(keyword => {
     const badge = document.createElement('div');
     badge.className = 'keyword-badge';
@@ -1105,29 +1072,24 @@ function renderKeywords() {
     keywordInputArea.appendChild(badge);
   });
   
-  // Add the input field back
   keywordInputArea.appendChild(keywordInput);
   
-  // Add event listeners to remove buttons
   document.querySelectorAll('.remove-keyword').forEach(button => {
     button.addEventListener('click', () => {
       const keywordToRemove = button.getAttribute('data-keyword');
       userKeywords = userKeywords.filter(k => k !== keywordToRemove);
       renderKeywords();
-      // Reset to first page when keyword is removed
       currentPage = 1;
       rankAndDisplayCourses();
     });
   });
 }
 
-// Rank courses based on keywords
 function rankCourses(courses, userKeywords) {
   if (userKeywords.length === 0) {
     return [];
   }
 
-  // Normalize keywords for comparison
   const normalizedUserKeywords = userKeywords.map(k => k.toLowerCase().trim());
 
   const rankedCourses = courses
@@ -1139,14 +1101,12 @@ function rankCourses(courses, userKeywords) {
         const normalizedCourseTag = courseTag.toLowerCase();
         
         normalizedUserKeywords.forEach(userKeyword => {
-          // Exact match
           if (normalizedCourseTag === userKeyword) {
             if (!matchedKeywords.includes(courseTag)) {
               matchedKeywords.push(courseTag);
             }
             score += 20;
           }
-          // Partial match (contains)
           else if (
             normalizedCourseTag.includes(userKeyword) ||
             userKeyword.includes(normalizedCourseTag)
@@ -1159,11 +1119,9 @@ function rankCourses(courses, userKeywords) {
         });
       });
       
-      // Add bonus points based on course rating and student count for more realistic scoring
-      score += (course.rating * 2); // Rating bonus (max 10 points)
-      score += Math.min(10, Math.floor(course.students / 10000)); // Student count bonus (max 10 points)
+      score += (course.rating * 2);
+      score += Math.min(10, Math.floor(course.students / 10000));
       
-      // Add a small random factor to prevent identical scores
       score += Math.random() * 5;
 
       return {
@@ -1178,7 +1136,6 @@ function rankCourses(courses, userKeywords) {
   return rankedCourses;
 }
 
-// Rank and display courses
 function rankAndDisplayCourses() {
   const rankedCourses = rankCourses(courses, userKeywords);
   
@@ -1195,9 +1152,7 @@ function rankAndDisplayCourses() {
   renderResults(rankedCourses);
 }
 
-// Render results with pagination
 function renderResults(rankedCourses) {
-  // Calculate pagination
   const totalPages = Math.ceil(rankedCourses.length / resultsPerPage);
   const startIndex = (currentPage - 1) * resultsPerPage;
   const endIndex = Math.min(startIndex + resultsPerPage, rankedCourses.length);
@@ -1219,7 +1174,6 @@ function renderResults(rankedCourses) {
       ${paginatedCourses.map((course, index) => renderCourseCard(course, startIndex + index)).join('')}
     </div>
     
-    <!-- Pagination Controls -->
     <div class="pagination-controls">
       <button id="prevPage" class="pagination-btn" ${currentPage === 1 ? 'disabled' : ''}>
         Previous
@@ -1233,7 +1187,6 @@ function renderResults(rankedCourses) {
     </div>
   `;
   
-  // Add event listeners for pagination buttons
   const prevBtn = document.getElementById('prevPage');
   const nextBtn = document.getElementById('nextPage');
   
@@ -1256,7 +1209,6 @@ function renderResults(rankedCourses) {
   }
 }
 
-// Render a course card
 function renderCourseCard(course, index) {
   const relevancePercentage = Math.min(100, Math.max(10, Math.floor((course.relevanceScore / 50) * 100)));
   
@@ -1280,7 +1232,7 @@ function renderCourseCard(course, index) {
       <div class="course-footer">
         <div class="course-details">
           <div class="detail-item">
-            <svg class="detail-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="hsl(120, 100%, 40%)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <!-- HackerRank green instead of sky blue -->
+            <svg class="detail-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="hsl(120, 100%, 40%)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"/>
               <path d="M12 16v-4"/>
               <path d="M12 8h.01"/>
@@ -1288,7 +1240,7 @@ function renderCourseCard(course, index) {
             <span>${course.level}</span>
           </div>
           <div class="detail-item">
-            <svg class="detail-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="hsl(120, 100%, 40%)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <!-- HackerRank green instead of sky blue -->
+            <svg class="detail-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="hsl(120, 100%, 40%)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"/>
               <polyline points="12 6 12 12 16 14"/>
             </svg>
@@ -1315,7 +1267,6 @@ function renderCourseCard(course, index) {
   `;
 }
 
-// Render empty state
 function renderEmptyState() {
   resultsContainer.innerHTML = `
     <div class="empty-state">
@@ -1333,7 +1284,6 @@ function renderEmptyState() {
   `;
 }
 
-// Render no matches state
 function renderNoMatchesState() {
   resultsContainer.innerHTML = `
     <div class="empty-state">
@@ -1351,59 +1301,43 @@ function renderNoMatchesState() {
   `;
 }
 
-// Initialize Spline viewer interactions
 function initSplineInteractions() {
-  // Use window-level event listeners for global interaction
-  // Make the Spline viewer respond to arrow keys globally using window-level listener
   window.addEventListener('keydown', (e) => {
-    // Only respond to arrow keys
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-      // Get the spline viewer each time in case it's loaded dynamically
       const splineViewer = document.getElementById('splineViewer');
       if (!splineViewer) return;
       
-      // Prevent default behavior for arrow keys to ensure our handler runs
       e.preventDefault();
       
-      // Add visual feedback class
       splineViewer.classList.add('spline-active');
       
-      // Handle arrow keys for robot movement
       switch(e.key) {
         case 'ArrowUp':
-          // Simulate robot moving forward
           simulateRobotMovement('forward');
           break;
         case 'ArrowDown':
-          // Simulate robot moving backward
           simulateRobotMovement('backward');
           break;
         case 'ArrowLeft':
-          // Simulate robot turning left
           simulateRobotMovement('left');
           break;
         case 'ArrowRight':
-          // Simulate robot turning right
           simulateRobotMovement('right');
           break;
       }
       
-      // Remove visual feedback after a short delay
       setTimeout(() => {
         if (splineViewer) {
           splineViewer.classList.remove('spline-active');
         }
       }, 300);
     }
-  }, true); // Use capture phase for window listener
+  }, true);
   
-  // Add mouse move interaction for parallax effect using window-level listener
   window.addEventListener('mousemove', (e) => {
-    // Get the spline viewer each time in case it's loaded dynamically
     const splineViewer = document.getElementById('splineViewer');
     if (!splineViewer) return;
     
-    // Apply parallax to the container instead of the viewer to avoid cropping issues
     const splineContainer = splineViewer.parentElement;
     if (!splineContainer) return;
     
@@ -1420,7 +1354,6 @@ function initSplineInteractions() {
     splineContainer.style.transform = `translate(${moveX}px, ${moveY}px)`;
   });
   
-  // Reset position when mouse leaves the window
   window.addEventListener('mouseleave', () => {
     const splineViewer = document.getElementById('splineViewer');
     if (splineViewer) {
@@ -1431,18 +1364,12 @@ function initSplineInteractions() {
       }
     }
   });
-  
-  console.log('Spline viewer interactions initialized');
 }
 
-// Simulate robot movement based on arrow key input
 function simulateRobotMovement(direction) {
   const splineViewer = document.getElementById('splineViewer');
   if (!splineViewer) return;
   
-  // Since we can't directly control the Spline robot,
-  // we'll create a visual feedback effect
-  // But we need to be careful not to interfere with the cropping
   let transform = '';
   let boxShadow = '';
   
@@ -1465,14 +1392,11 @@ function simulateRobotMovement(direction) {
       break;
   }
   
-  // Apply temporary transform and boxShadow for visual feedback
-  // We apply these to a wrapper to avoid interfering with cropping
   const splineContainer = splineViewer.parentElement;
   if (splineContainer) {
     splineContainer.style.transform = transform;
     splineContainer.style.boxShadow = boxShadow;
   
-    // Reset after a short delay
     setTimeout(() => {
       splineContainer.style.transform = 'translate(0px, 0px)';
       splineContainer.style.boxShadow = 'none';
@@ -1480,9 +1404,7 @@ function simulateRobotMovement(direction) {
   }
 }
 
-// Initialize the app when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   initApp();
-  // Initialize Spline interactions immediately
   initSplineInteractions();
 });
