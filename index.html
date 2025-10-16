@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Course Recommender - AI-Powered Learning</title>
+    <meta name="description" content="Discover personalized course recommendations based on your interests. Smart keyword matching for your perfect learning path.">
+    <meta name="author" content="Smart Course Recommender">
+    
+    <meta property="og:title" content="Smart Course Recommender - AI-Powered Learning">
+    <meta property="og:description" content="Discover personalized course recommendations based on your interests">
+    <meta property="og:type" content="website">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.80/build/spline-viewer.js"></script>
+</head>
+<body>
+    <div class="app">
+        <!-- Spline Viewer Container with cropping -->
+        <div class="spline-container">
+            <spline-viewer url="https://prod.spline.design/GdbEGg4nlcxWHQWX/scene.splinecode" class="spline-background" id="splineViewer"></spline-viewer>
+        </div>
+        
+        <!-- Gradient glow effect -->
+        <div class="gradient-glow"></div>
+        
+        <div class="container">
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <div class="tag">
+                    Best Course Discovery
+                </div>
+                
+                <h1 class="main-title">
+                    <span class="first-letter-green">S</span>mart Course
+                    <br>
+                    <span class="first-letter-green">R</span>ecommender
+                </h1>
+                
+                <p class="subtitle">
+                    Enter your interests and discover personalized course recommendations tailored to your learning goals
+                </p>
+            </div>
+
+            <!-- Keyword Input -->
+            <div class="keyword-input-container">
+                <div class="keyword-input-area" id="keywordInputArea">
+                    <!-- Keywords will be added here dynamically -->
+                    <input type="text" id="keywordInput" class="keyword-input" placeholder="Type keywords and press Enter (e.g., Python, AI, Web Development)">
+                </div>
+                <p class="input-help">
+                    Press <kbd>Enter</kbd> to add keywords, <kbd>Backspace</kbd> to remove
+                </p>
+                <button id="mobileActionBtn" class="mobile-action-btn">Find Courses</button>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-container" id="resultsContainer">
+                <!-- Results will be displayed here dynamically -->
+            </div>
+        </div>
+        
+        <!-- Back to Top Button -->
+        <button id="backToTop" class="back-to-top">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m18 15-6-6-6 6"/>
+            </svg>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
